@@ -6,8 +6,8 @@ import LoadingLabel from '../../../shared/components/LoadingLabel.jsx';
 import { useLoginMutation } from '../api/authApi.js';
 
 const initialForm = {
-  email: '',
-  password: '',
+  email: 'superadmin@test.com',
+  password: 'superadminpass123@',
 };
 
 function LoginPage() {
