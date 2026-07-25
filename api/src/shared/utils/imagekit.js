@@ -34,7 +34,7 @@ export const uploadImage = async (fileBuffer, originalName, folder = 'general') 
     const response = await imagekitInstance.files.upload({
       file: fileBuffer.toString('base64'),
       fileName: originalName,
-      folder: `/cricbuzz/${folder}`,
+      folder: `/tee3/${folder}`,
     });
     return response.url;
   } catch (error) {

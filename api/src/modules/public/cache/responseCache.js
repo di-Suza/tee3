@@ -2,7 +2,7 @@ import redisConnection from '../../../config/redis.js';
 import logger from '../../../config/logger.js';
 
 class ResponseCache {
-  constructor({ prefix = 'cricbuzz:public-cache:' } = {}) {
+  constructor({ prefix = 'tee3:public-cache:' } = {}) {
     this.store = new Map();
     this.prefix = prefix;
   }

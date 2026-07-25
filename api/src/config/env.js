@@ -7,7 +7,7 @@ const envSchema = z
   .object({
     NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
     PORT: z.coerce.number().int().min(1).max(65535).default(3000),
-    MONGODB_URI: z.string().trim().min(1).default('mongodb://localhost:27017/cricbuzz_backend'),
+    MONGODB_URI: z.string().trim().min(1).default('mongodb://localhost:27017/tee3_backend'),
     JWT_PRIVATE_KEY_BASE64: z.string().trim().min(1).default('base64_encoded_private_key_here'),
     JWT_PUBLIC_KEY_BASE64: z.string().trim().min(1).default('base64_encoded_public_key_here'),
     ACCESS_TOKEN_EXPIRES_IN: z.string().trim().min(1).default('15m'),
