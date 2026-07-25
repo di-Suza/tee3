@@ -1,6 +1,6 @@
-# Cricbuzz Project
+# Tee3 Project
 
-A full-stack cricket management and live scoring application inspired by Cricbuzz-style workflows. The project contains an Express/MongoDB backend and a React/Vite frontend. It supports role-based admin workflows, team and player management, squad selection, series and match lifecycle management, Playing XI selection, live scoring, commentary, public match pages, Socket.IO realtime updates, Redis-backed public caching, and seed utilities for testing.
+A full-stack cricket management and live scoring application built for Team Tee 3 workflows. The project contains an Express/MongoDB backend and a React/Vite frontend. It supports role-based admin workflows, team and player management, squad selection, series and match lifecycle management, Playing XI selection, live scoring, commentary, public match pages, Socket.IO realtime updates, Redis-backed public caching, and seed utilities for testing.
 
 ## Table Of Contents
 
@@ -61,7 +61,7 @@ The goal is to build a cricket platform with two major surfaces:
 ## Monorepo Structure
 
 ```txt
-cricbuzz/
+tee3/
   api/
     src/
       app.js                     Express app, middleware, route registration
@@ -202,7 +202,7 @@ Shared concerns live in `web/src/shared`, such as base API, socket client, permi
 
 ```bash
 git clone <repo-url>
-cd cricbuzz
+cd tee3
 
 npm install
 npm --prefix api install
@@ -1305,7 +1305,7 @@ Check:
 For local testing, use a local MongoDB URI:
 
 ```txt
-mongodb://localhost:27017/cricbuzz_backend
+mongodb://localhost:27017/tee3_backend
 ```
 
 ### CORS Errors
