@@ -40,8 +40,6 @@ function LoginPage() {
           <BrandLogo size="lg" withGlow className="mb-5" />
           <p className="text-sm font-semibold uppercase tracking-wide text-[#baff16]">Admin panel</p>
           <h1 className="mt-2 text-2xl font-semibold text-white">Sign in</h1>
-=======
-  
         </div>
 
         <form className="space-y-5" onSubmit={handleSubmit}>
