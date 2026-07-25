@@ -23,7 +23,7 @@ function LoadingState({
     <div className={`${VARIANT_CLASS[variant] || VARIANT_CLASS.panel} ${className}`} role="status" aria-live="polite">
       <span className={`cricket-loader-ball ${SIZE_CLASS[size] || SIZE_CLASS.md}`} aria-hidden="true" />
       {label ? (
-        <span className={`${isInline ? 'text-xs' : 'text-sm'} font-black uppercase tracking-[0.18em] text-[#a9c3ff]`}>
+        <span className={`${isInline ? 'text-xs' : 'text-sm'} font-black uppercase tracking-[0.18em] text-[#d7ff5f]`}>
           {label}
         </span>
       ) : null}

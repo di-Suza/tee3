@@ -3,21 +3,21 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'CricketArena';
+  font-family: 'Tee3Display';
   src: url('./shared/assets/fonts/font1.woff2') format('woff2');
   font-display: swap;
 }
 
 @layer base {
   html {
-    background: #0d1211;
+    background: #080b0a;
   }
 
   body {
     margin: 0;
     min-width: 320px;
     overflow-x: hidden;
-    font-family: 'CricketArena', Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Tee3Display', Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -34,6 +34,14 @@
 
 .admin-theme {
   color-scheme: dark;
+  --tee3-bg: #080b0a;
+  --tee3-surface: #111611;
+  --tee3-surface-2: #171d18;
+  --tee3-surface-hover: #222a21;
+  --tee3-border: #334033;
+  --tee3-muted: #aab5a8;
+  --tee3-accent: #baff16;
+  --tee3-accent-soft: #d7ff5f;
 }
 
 .cricket-loader-ball {
@@ -48,7 +56,7 @@
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.12) inset,
     0 10px 30px rgba(216, 72, 61, 0.22),
-    0 0 34px rgba(169, 195, 255, 0.14);
+    0 0 34px rgba(186, 255, 22, 0.12);
   animation: cricket-ball-spin 0.9s linear infinite;
 }
 
@@ -85,11 +93,35 @@
 .admin-theme .bg-slate-50,
 .admin-theme .bg-slate-100,
 .admin-theme .bg-slate-50\/70 {
-  background-color: #1a1f20 !important;
+  background-color: var(--tee3-surface) !important;
 }
 
 .admin-theme .bg-emerald-50 {
-  background-color: #10241e !important;
+  background-color: #17250e !important;
+}
+
+.admin-theme .bg-sky-50,
+.admin-theme .bg-emerald-100 {
+  background-color: #24310f !important;
+}
+
+.admin-theme .bg-emerald-600,
+.admin-theme .bg-emerald-400 {
+  background-color: var(--tee3-accent) !important;
+  color: var(--tee3-bg) !important;
+}
+
+.admin-theme .hover\:bg-white:hover,
+.admin-theme .hover\:bg-slate-50:hover,
+.admin-theme .hover\:bg-slate-100:hover,
+.admin-theme .hover\:bg-emerald-50:hover {
+  background-color: var(--tee3-surface-hover) !important;
+}
+
+.admin-theme .hover\:bg-emerald-300:hover,
+.admin-theme .hover\:bg-emerald-700:hover {
+  background-color: var(--tee3-accent-soft) !important;
+  color: var(--tee3-bg) !important;
 }
 
 .admin-theme .bg-rose-50 {
@@ -110,11 +142,22 @@
 .admin-theme .text-slate-600,
 .admin-theme .text-slate-500,
 .admin-theme .text-slate-400 {
-  color: #aeb5c0 !important;
+  color: var(--tee3-muted) !important;
 }
 
-.admin-theme .text-emerald-700 {
-  color: #7ee9c0 !important;
+.admin-theme .text-emerald-300,
+.admin-theme .text-emerald-600,
+.admin-theme .text-emerald-700,
+.admin-theme .text-emerald-800,
+.admin-theme .text-emerald-900,
+.admin-theme .text-emerald-950,
+.admin-theme .text-sky-700,
+.admin-theme .text-indigo-600,
+.admin-theme .text-indigo-900,
+.admin-theme .hover\:text-indigo-900:hover,
+.admin-theme .hover\:text-emerald-900:hover,
+.admin-theme .hover\:text-sky-700:hover {
+  color: var(--tee3-accent-soft) !important;
 }
 
 .admin-theme .text-rose-700 {
@@ -128,21 +171,36 @@
 
 .admin-theme .border-slate-200,
 .admin-theme .border-slate-300,
-.admin-theme .border-amber-200 {
-  border-color: #343b40 !important;
+.admin-theme .border-amber-200,
+.admin-theme .border-emerald-200,
+.admin-theme .border-emerald-100,
+.admin-theme .border-sky-200 {
+  border-color: var(--tee3-border) !important;
+}
+
+.admin-theme .hover\:border-emerald-300:hover,
+.admin-theme .hover\:border-sky-200:hover {
+  border-color: var(--tee3-accent) !important;
 }
 
 .admin-theme .divide-slate-200 > :not([hidden]) ~ :not([hidden]),
 .admin-theme .divide-slate-100 > :not([hidden]) ~ :not([hidden]) {
-  border-color: #343b40 !important;
+  border-color: var(--tee3-border) !important;
 }
 
 .admin-theme input,
 .admin-theme select,
 .admin-theme textarea {
-  background-color: #111616;
-  border-color: #343b40;
+  background-color: #0d110e;
+  border-color: var(--tee3-border);
   color: #f4f7fb;
+}
+
+.admin-theme input:focus,
+.admin-theme select:focus,
+.admin-theme textarea:focus {
+  border-color: var(--tee3-accent) !important;
+  box-shadow: 0 0 0 4px rgba(186, 255, 22, 0.12) !important;
 }
 
 .admin-theme input::placeholder,
@@ -151,11 +209,22 @@
 }
 
 .admin-theme select option {
-  background-color: #111616;
+  background-color: #0d110e;
   color: #f4f7fb;
 }
 
 .admin-theme table thead,
 .admin-theme thead.bg-white {
-  background-color: #151a1b !important;
+  background-color: #0f140f !important;
+}
+
+.admin-theme tbody tr:hover,
+.admin-theme .group:hover {
+  color: #f8ffe6;
+}
+
+.admin-theme .ring-emerald-100,
+.admin-theme .ring-sky-100,
+.admin-theme .ring-emerald-600\/20 {
+  --tw-ring-color: rgba(186, 255, 22, 0.24) !important;
 }
