@@ -29,7 +29,7 @@ function TeamSquad({ teamName, logo, players }) {
       <div className="p-4 space-y-3">
         {players.map((player, idx) => (
           <div key={idx} className="flex items-center gap-4 rounded-xl border border-[#2a2d33] bg-[#2a2d33] p-4 transition hover:border-[#3b3e45] hover:bg-[#32363d]">
-             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#bcd0ff] text-xs font-black text-[#1a2c4e] shadow-sm">
+             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#d7ff5f] text-xs font-black text-[#080b0a] shadow-sm">
                {player.initials || getInitials(player.name)}
              </div>
              <div>
@@ -72,14 +72,14 @@ export default function UpcomingMatchView({ match }) {
                   )}
                 </div>
                 <h1 className="mt-6 text-3xl font-black uppercase tracking-widest text-white">{team1Name}</h1>
-                <span className="mt-3 rounded-full border border-[#3b3e45] bg-[#1a1c1e] px-4 py-1.5 text-[10px] font-black uppercase tracking-widest text-[#bcd0ff]">
+                <span className="mt-3 rounded-full border border-[#3b3e45] bg-[#1a1c1e] px-4 py-1.5 text-[10px] font-black uppercase tracking-widest text-[#d7ff5f]">
                   {match?.series?.name || 'ODI WORLD CUP'}
                 </span>
               </div>
 
               {/* Countdown Timer */}
               <div className="flex flex-col items-center justify-center px-4">
-                 <h2 className="text-4xl font-black italic tracking-widest text-[#8ba4fc] opacity-80 mb-6 drop-shadow-lg">VS</h2>
+                 <h2 className="text-4xl font-black italic tracking-widest text-[#baff16] opacity-80 mb-6 drop-shadow-lg">VS</h2>
                  <div className="flex items-center gap-4 text-center">
                     <div>
                       <p className="text-4xl font-black text-white">02</p>
@@ -118,11 +118,11 @@ export default function UpcomingMatchView({ match }) {
             {/* Footer */}
             <div className="mt-12 flex items-center justify-center gap-8 text-[11px] font-bold tracking-wider text-[#d3d7de] sm:gap-16">
                <div className="flex items-center gap-2">
-                 <svg className="h-4 w-4 text-[#8ba4fc]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                 <svg className="h-4 w-4 text-[#baff16]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                  <span>Saturday, Oct 14</span>
                </div>
                <div className="flex items-center gap-2">
-                 <svg className="h-4 w-4 text-[#8ba4fc]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                 <svg className="h-4 w-4 text-[#baff16]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                  <span>{match?.venue || "Lord's Cricket Ground, London"}</span>
                </div>
             </div>
@@ -162,7 +162,7 @@ export default function UpcomingMatchView({ match }) {
                  <div className="mt-8 flex items-center justify-between border-t border-[#3b3e45] pt-6">
                     <div className="text-center">
                       <p className="text-[9px] font-black uppercase tracking-widest text-[#87909e]">Forecast</p>
-                      <p className="mt-1 text-xs font-black text-[#bcd0ff]">Sunny, 22°C</p>
+                      <p className="mt-1 text-xs font-black text-[#d7ff5f]">Sunny, 22°C</p>
                     </div>
                     <div className="text-center">
                       <p className="text-[9px] font-black uppercase tracking-widest text-[#87909e]">Pitch</p>
@@ -180,11 +180,11 @@ export default function UpcomingMatchView({ match }) {
             <div className="flex items-center gap-5 rounded-2xl border border-[#2a2d33] bg-[#24272c] p-5">
                <div className="relative flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-[#1d2a46] to-[#0c1524]">
                   {/* Mock player image silhoutte */}
-                  <div className="h-16 w-10 bg-[#bcd0ff]/20 rounded-full" />
-                  <span className="absolute -bottom-2 -right-2 rounded-md bg-[#bcd0ff] px-2 py-0.5 text-[8px] font-black uppercase tracking-widest text-[#1a2c4e] border-2 border-[#24272c]">MVP</span>
+                  <div className="h-16 w-10 bg-[#d7ff5f]/20 rounded-full" />
+                  <span className="absolute -bottom-2 -right-2 rounded-md bg-[#d7ff5f] px-2 py-0.5 text-[8px] font-black uppercase tracking-widest text-[#080b0a] border-2 border-[#24272c]">MVP</span>
                </div>
                <div>
-                  <p className="text-[9px] font-black uppercase tracking-widest text-[#8ba4fc]">Key Battle Player</p>
+                  <p className="text-[9px] font-black uppercase tracking-widest text-[#baff16]">Key Battle Player</p>
                   <p className="mt-1 text-lg font-black text-white">Mark Wood</p>
                   <p className="mt-1 text-[10px] leading-relaxed text-[#d3d7de]">Crucial for early breakthroughs with 95mph+ pace.</p>
                </div>

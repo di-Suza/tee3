@@ -208,8 +208,8 @@ export default function VirtualArena3D({ latestEvent }) {
         
         <ambientLight intensity={0.4} />
         <directionalLight position={[10, 20, 10]} intensity={1.5} castShadow />
-        <pointLight position={[-10, 15, -10]} intensity={0.8} color="#a9c3ff" />
-        <pointLight position={[10, 15, 10]} intensity={0.8} color="#a9c3ff" />
+        <pointLight position={[-10, 15, -10]} intensity={0.8} color="#d7ff5f" />
+        <pointLight position={[10, 15, 10]} intensity={0.8} color="#d7ff5f" />
         
         <fog attach="fog" args={['#0c1517', 20, 80]} />
         

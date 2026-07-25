@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
+import BrandLogo from '../../../shared/components/BrandLogo.jsx';
 import LoadingLabel from '../../../shared/components/LoadingLabel.jsx';
 import { useLoginMutation } from '../api/authApi.js';
 
@@ -32,13 +33,11 @@ function LoginPage() {
   }
 
   return (
-    <section className="grid h-[calc(100vh-73px)] place-items-center overflow-hidden px-4 py-6">
-      <div className="w-full max-w-md rounded-lg border border-slate-800 bg-slate-900/95 p-7 shadow-2xl shadow-black/25">
+    <section className="grid h-[calc(100vh-73px)] place-items-center overflow-hidden bg-[radial-gradient(circle_at_top,rgba(186,255,22,0.12),transparent_36%),#080b0a] px-4 py-6">
+      <div className="w-full max-w-md rounded-lg border border-[#2d382a] bg-[#111611]/95 p-7 shadow-2xl shadow-black/25">
         <div className="mb-7">
-          <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-md bg-emerald-400 text-lg font-bold text-slate-950">
-            C
-          </div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-emerald-300">Cricbuzz Admin</p>
+          <BrandLogo size="lg" withGlow className="mb-5" />
+          <p className="text-sm font-semibold uppercase tracking-wide text-[#baff16]">Admin panel</p>
           <h1 className="mt-2 text-2xl font-semibold text-white">Sign in</h1>
         </div>
 
@@ -51,7 +50,7 @@ function LoginPage() {
               value={form.email}
               onChange={updateField}
               placeholder="name@example.com"
-              className="mt-2 h-11 w-full rounded-md border border-slate-700 bg-slate-950/70 px-3 text-sm text-white outline-none transition placeholder:text-slate-600 hover:border-slate-600 focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10"
+              className="mt-2 h-11 w-full rounded-md border border-[#334033] bg-[#080b0a]/70 px-3 text-sm text-white outline-none transition placeholder:text-slate-600 hover:border-[#506044] focus:border-[#baff16] focus:ring-4 focus:ring-[#baff16]/10"
               required
             />
           </label>
@@ -64,7 +63,7 @@ function LoginPage() {
               value={form.password}
               onChange={updateField}
               placeholder="Enter password"
-              className="mt-2 h-11 w-full rounded-md border border-slate-700 bg-slate-950/70 px-3 text-sm text-white outline-none transition placeholder:text-slate-600 hover:border-slate-600 focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10"
+              className="mt-2 h-11 w-full rounded-md border border-[#334033] bg-[#080b0a]/70 px-3 text-sm text-white outline-none transition placeholder:text-slate-600 hover:border-[#506044] focus:border-[#baff16] focus:ring-4 focus:ring-[#baff16]/10"
               required
             />
           </label>
@@ -78,7 +77,7 @@ function LoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="h-11 w-full rounded-md bg-emerald-400 px-4 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-950/20 transition hover:bg-emerald-300 focus:outline-none focus:ring-4 focus:ring-emerald-400/20 disabled:cursor-not-allowed disabled:opacity-70"
+            className="h-11 w-full rounded-md bg-[#baff16] px-4 text-sm font-semibold text-[#080b0a] shadow-lg shadow-[#baff16]/10 transition hover:bg-[#d7ff5f] focus:outline-none focus:ring-4 focus:ring-[#baff16]/20 disabled:cursor-not-allowed disabled:opacity-70"
           >
             {isLoading ? <LoadingLabel label="Signing in" /> : 'Login'}
           </button>

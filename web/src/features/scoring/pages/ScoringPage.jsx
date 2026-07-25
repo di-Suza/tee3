@@ -476,11 +476,11 @@ function ScoringPage() {
               <div className="flex items-center gap-6">
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-widest text-[#87909e] mb-1">OVER LIMIT</p>
-                  <p className="text-sm font-bold text-[#a9c3ff]">{scoringRules.maxOvers ? `${scoringRules.maxOvers}.0` : 'None'}</p>
+                  <p className="text-sm font-bold text-[#d7ff5f]">{scoringRules.maxOvers ? `${scoringRules.maxOvers}.0` : 'None'}</p>
                 </div>
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-widest text-[#87909e] mb-1">STATUS</p>
-                  <p className="text-sm font-bold text-[#a9c3ff]">ACTIVE</p>
+                  <p className="text-sm font-bold text-[#d7ff5f]">ACTIVE</p>
                 </div>
               </div>
             </div>
@@ -641,7 +641,7 @@ function ScoringPage() {
                       value={form.note}
                       onChange={(event) => setField('note', event.target.value)}
                       placeholder="e.g. Beauty of a yorker..."
-                      className="h-10 w-full rounded-md border border-[#3c3e42] bg-[#2a2c30] px-3 text-sm text-white placeholder-[#87909e] outline-none focus:border-[#4d8dff]"
+                      className="h-10 w-full rounded-md border border-[#3c3e42] bg-[#2a2c30] px-3 text-sm text-white placeholder-[#87909e] outline-none focus:border-[#baff16]"
                     />
                   </div>
                   <div>
@@ -649,7 +649,7 @@ function ScoringPage() {
                     <select
                       value={form.extraType}
                       onChange={(event) => setField('extraType', event.target.value)}
-                      className="h-10 w-full rounded-md border border-[#3c3e42] bg-[#2a2c30] px-3 text-sm text-white outline-none focus:border-[#4d8dff]"
+                      className="h-10 w-full rounded-md border border-[#3c3e42] bg-[#2a2c30] px-3 text-sm text-white outline-none focus:border-[#baff16]"
                     >
                       {EXTRA_TYPES.map((type) => (
                         <option key={type} value={type}>{type === 'NONE' ? 'None' : type.replace('_', ' ')}</option>
@@ -664,7 +664,7 @@ function ScoringPage() {
                       max="7"
                       value={form.extras}
                       onChange={(event) => setField('extras', event.target.value)}
-                      className="h-10 w-full rounded-md border border-[#3c3e42] bg-[#2a2c30] px-3 text-sm text-white text-center outline-none focus:border-[#4d8dff]"
+                      className="h-10 w-full rounded-md border border-[#3c3e42] bg-[#2a2c30] px-3 text-sm text-white text-center outline-none focus:border-[#baff16]"
                     />
                   </div>
                 </div>
@@ -673,7 +673,7 @@ function ScoringPage() {
                   <button
                     type="submit"
                     disabled={addState.isLoading || !canAddBall}
-                    className="w-full h-12 rounded-lg bg-[#a9c3ff] text-[#081018] font-bold flex items-center justify-center gap-2 transition hover:bg-[#8fb5ff] disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full h-12 rounded-lg bg-[#baff16] text-[#080b0a] font-bold flex items-center justify-center gap-2 transition hover:bg-[#d7ff5f] disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {addState.isLoading ? (
                       <LoadingLabel label="COMMITTING" />
@@ -733,7 +733,7 @@ function ScoringPage() {
                       <div
                         key={e._id}
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black ${e.isWicket ? 'bg-[#f43f5e] text-white' :
-                            isBoundary ? 'bg-[#4d8dff] text-white' :
+                            isBoundary ? 'bg-[#baff16] text-[#080b0a]' :
                               'bg-[#2a2c30] text-[#d3d7de]'
                           }`}
                       >
@@ -765,7 +765,7 @@ function ScoringPage() {
                     const isStriker = String(stat.player._id || stat.player) === String(form.striker);
                     return (
                       <tr key={getPlayerId(stat.player)}>
-                        <td className={`px-4 py-2.5 font-bold ${isStriker ? 'text-[#a9c3ff]' : 'text-white'}`}>
+                        <td className={`px-4 py-2.5 font-bold ${isStriker ? 'text-[#d7ff5f]' : 'text-white'}`}>
                           {getPlayerName(stat.player)}{isStriker ? '*' : ''}
                         </td>
                         <td className="px-3 py-2.5 text-white font-medium">{stat.runs}</td>
@@ -796,7 +796,7 @@ function ScoringPage() {
                         <div className="text-xs font-medium text-[#87909e] pt-1 shrink-0 w-8">{e.over}.{e.ball}</div>
                         <div className="shrink-0 pt-0.5">
                           <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black ${e.isWicket ? 'bg-[#f43f5e] text-white' :
-                              isBoundary ? 'bg-[#4d8dff] text-white' :
+                              isBoundary ? 'bg-[#baff16] text-[#080b0a]' :
                                 'bg-[#2a2c30] text-[#d3d7de]'
                             }`}>
                             {e.isWicket ? 'W' : e.totalRuns}

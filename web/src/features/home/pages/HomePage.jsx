@@ -40,7 +40,7 @@ function MatchCard({ match, tone = 'live' }) {
   return (
     <Link
       to={`/matches/${match._id}`}
-      className="group flex flex-col rounded-2xl border border-[#26282b] bg-[#1a1c1e] p-6 shadow-sm transition hover:-translate-y-1 hover:border-[#3c3e42] hover:bg-[#1e2023]"
+      className="group flex flex-col rounded-2xl border border-[#263020] bg-[#121713] p-6 shadow-sm transition hover:-translate-y-1 hover:border-[#baff16]/70 hover:bg-[#171d18]"
     >
       <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-[#a0a5ad] mb-6">
         <span className={`flex items-center gap-1.5 rounded-full px-2.5 py-1 ${tone === 'live' ? 'bg-[#e51d20] text-white' : 'bg-[#2a2c30] text-[#d3d7de]'}`}>
@@ -53,8 +53,8 @@ function MatchCard({ match, tone = 'live' }) {
       <div className="space-y-5 flex-1">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-6 w-6 overflow-hidden rounded-full border border-[#3c3e42] bg-[#2a2c30]">
-              {match.team1?.logo ? <img src={match.team1.logo} className="h-full w-full object-cover" /> : <div className="h-full w-full bg-[#3c3e42]" />}
+            <div className="h-6 w-6 overflow-hidden rounded-full border border-[#334033] bg-[#222a21]">
+              {match.team1?.logo ? <img src={match.team1.logo} className="h-full w-full object-cover" /> : <div className="h-full w-full bg-[#334033]" />}
             </div>
             <span className="text-lg font-black text-white">{getTeamName(match.team1)}</span>
           </div>
@@ -67,8 +67,8 @@ function MatchCard({ match, tone = 'live' }) {
         
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-6 w-6 overflow-hidden rounded-full border border-[#3c3e42] bg-[#2a2c30]">
-              {match.team2?.logo ? <img src={match.team2.logo} className="h-full w-full object-cover" /> : <div className="h-full w-full bg-[#3c3e42]" />}
+            <div className="h-6 w-6 overflow-hidden rounded-full border border-[#334033] bg-[#222a21]">
+              {match.team2?.logo ? <img src={match.team2.logo} className="h-full w-full object-cover" /> : <div className="h-full w-full bg-[#334033]" />}
             </div>
             <span className={`text-lg font-black ${tone === 'live' ? 'text-[#87909e]' : 'text-white'}`}>{getTeamName(match.team2)}</span>
           </div>
@@ -80,7 +80,7 @@ function MatchCard({ match, tone = 'live' }) {
         </div>
       </div>
 
-      <div className="mt-8 flex items-center justify-between border-t border-[#26282b] pt-4">
+      <div className="mt-8 flex items-center justify-between border-t border-[#263020] pt-4">
         {tone === 'upcoming' && (
           <>
             <span className="text-[10px] font-black uppercase tracking-widest text-[#a0a5ad]">
@@ -150,13 +150,13 @@ function HomePage() {
   }, [dispatch, refetch]);
 
   return (
-    <section className="min-h-screen bg-[#141517] text-white">
+    <section className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(186,255,22,0.08),transparent_34%),#080b0a] text-white">
       <div className="mx-auto max-w-[1400px] px-8 py-10">
         
         {/* Header Hero */}
         <div className="mb-12">
-          <span className="inline-flex items-center gap-2 rounded-full bg-[#f1f3f5] px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-[#141517]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#87909e]" />
+          <span className="inline-flex items-center gap-2 rounded-full bg-[#baff16] px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-[#080b0a] shadow-[0_0_24px_rgba(186,255,22,0.18)]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#080b0a]" />
             Live Cricket
           </span>
           <h1 className="mt-5 text-4xl font-black leading-none tracking-tight text-white sm:text-[2.75rem]">

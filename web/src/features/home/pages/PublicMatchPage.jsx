@@ -125,7 +125,7 @@ function TeamBadge({ team, align = 'center' }) {
         {team?.logo ? (
           <img src={team.logo} alt="" className="h-full w-full object-cover" />
         ) : (
-          <span className="text-xl font-black text-[#b8c9ff]">{getInitials(getTeamName(team))}</span>
+          <span className="text-xl font-black text-[#d7ff5f]">{getInitials(getTeamName(team))}</span>
         )}
       </div>
       <div className={`text-${align}`}>
@@ -148,7 +148,7 @@ function MatchHero({ match, liveScore }) {
 
         {/* Score */}
         <div className="flex flex-col items-center text-center">
-           <span className="rounded-full bg-[#293142] border border-[#6d7890] px-3 py-1 text-[10px] font-black uppercase tracking-widest text-[#b8c9ff] mb-4">
+           <span className="rounded-full border border-[#6d7f38] bg-[#253013] px-3 py-1 text-[10px] font-black uppercase tracking-widest text-[#d7ff5f] mb-4">
              {statusLabel}
            </span>
            <h1 className="text-[2.75rem] font-black leading-none tracking-tight text-white drop-shadow-md">
@@ -192,7 +192,7 @@ function MatchPulse({ recentEvents = [], liveScore }) {
           <span>{liveScore?.overs || '0.0'} OV</span>
         </div>
         <div className="mt-3 flex h-2 overflow-hidden rounded-full">
-          <div className="h-full bg-[#8ba4fc]" style={{ width: `${Math.min(Number(liveScore?.runRate || 0) * 8, 100)}%` }} />
+          <div className="h-full bg-[#baff16]" style={{ width: `${Math.min(Number(liveScore?.runRate || 0) * 8, 100)}%` }} />
           <div className="h-full flex-1 bg-[#31393d]" />
         </div>
       </div>
@@ -207,7 +207,7 @@ function MatchPulse({ recentEvents = [], liveScore }) {
                 event?.isWicket
                   ? 'bg-[#e5b2b2] text-[#4b1b1b]'
                   : Number(event?.totalRuns) >= 4
-                    ? 'bg-[#bcd0ff] text-[#1a2c4e]'
+                    ? 'bg-[#d7ff5f] text-[#080b0a]'
                     : 'bg-[#31393d] text-[#e0e3e8]'
               }`}>
                 {event?.isWicket ? 'W' : event?.totalRuns}
@@ -262,10 +262,10 @@ function LiveBatting({ stats = [], liveScore }) {
               return (
               <div key={row.player?._id || row.player?.name} className={`relative grid grid-cols-[1fr_auto_auto_auto_auto_auto] items-center gap-4 py-1.5 px-4`}>
                 {/* Active marker for striker */}
-                {isStriker && <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#8ba4fc] rounded-r-sm" />}
+                {isStriker && <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#baff16] rounded-r-sm" />}
                 
                 <span className="font-black text-[#e0e3e8] truncate">{row.player?.name}{isStriker ? '*' : ''}</span>
-                <span className={`w-6 text-center font-black ${isStriker ? 'text-[#a9c3ff]' : 'text-white'}`}>{row.runs}</span>
+                <span className={`w-6 text-center font-black ${isStriker ? 'text-[#d7ff5f]' : 'text-white'}`}>{row.runs}</span>
                 <span className="w-6 text-center font-bold text-[#d3d7de]">{row.balls}</span>
                 <span className="w-6 text-center font-bold text-[#d3d7de]">{row.fours}</span>
                 <span className="w-6 text-center font-bold text-[#d3d7de]">{row.sixes}</span>
@@ -295,10 +295,10 @@ function CommentaryPanel({ commentary = [] }) {
           <p className="text-sm text-[#87909e]">No commentary yet.</p>
         ) : (
           commentary.slice(0, 6).map((entry, i) => (
-            <article key={entry._id} className={`relative rounded-xl border border-[#2a2c30] bg-[#1e2023] p-4 ${i===0 ? 'border-l-[3px] border-l-[#8ba4fc]' : ''}`}>
+            <article key={entry._id} className={`relative rounded-xl border border-[#2a2c30] bg-[#1e2023] p-4 ${i===0 ? 'border-l-[3px] border-l-[#baff16]' : ''}`}>
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-black tracking-widest text-[#d3d7de]">{entry.over}.{entry.ball}</span>
-                <span className={`rounded px-2 py-0.5 text-[10px] font-black tracking-widest ${entry.type === 'SIX' ? 'bg-[#bcd0ff] text-[#1a2c4e]' : entry.type === 'WICKET' ? 'bg-[#e5b2b2] text-[#4b1b1b]' : 'bg-[#2a2c30] text-[#a0a5ad]'}`}>
+                <span className={`rounded px-2 py-0.5 text-[10px] font-black tracking-widest ${entry.type === 'SIX' ? 'bg-[#d7ff5f] text-[#080b0a]' : entry.type === 'WICKET' ? 'bg-[#e5b2b2] text-[#4b1b1b]' : 'bg-[#2a2c30] text-[#a0a5ad]'}`}>
                   {entry.type}
                 </span>
               </div>
@@ -342,7 +342,7 @@ function VirtualArena({ latestEvent }) {
     <section className="rounded-2xl border border-[#26282b] bg-[#1a1c1e] shadow-sm overflow-hidden flex flex-col h-[500px]">
       <div className="flex items-center justify-between p-6 pb-4">
         <div className="flex items-center gap-3">
-          <svg className="h-5 w-5 text-[#8ba4fc]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"/></svg>
+          <svg className="h-5 w-5 text-[#baff16]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"/></svg>
           <div>
              <h2 className="text-[1.3rem] font-black text-white leading-none">Virtual Arena</h2>
              <p className="text-[11px] font-bold text-[#a0a5ad] mt-1.5">Real-time Ball Tracking & Field Placement</p>
@@ -355,7 +355,7 @@ function VirtualArena({ latestEvent }) {
           <button className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2a2c30] transition hover:bg-[#3c3e42]">
              <svg className="h-4 w-4 text-[#d3d7de]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
           </button>
-          <button className="rounded-lg bg-[#bcd0ff] px-4 py-2 text-[10px] font-black tracking-widest text-[#1a2c4e] transition hover:bg-white">
+          <button className="rounded-lg bg-[#baff16] px-4 py-2 text-[10px] font-black tracking-widest text-[#080b0a] transition hover:bg-[#d7ff5f]">
             WAGON WHEEL
           </button>
         </div>
@@ -490,7 +490,7 @@ function PublicMatchPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#0d1211] px-4 py-10">
+      <div className="min-h-screen bg-[#080b0a] px-4 py-10">
         <LoadingState label="Loading match center" size="lg" variant="page" className="min-h-[70vh]" />
       </div>
     );
@@ -499,16 +499,16 @@ function PublicMatchPage() {
   if (!match) {
     return (
       <div className="mx-auto max-w-7xl px-4 py-10">
-        <Link to="/" className="text-sm font-bold text-[#a9c3ff]">Back to matches</Link>
+        <Link to="/" className="text-sm font-bold text-[#d7ff5f]">Back to matches</Link>
         <p className="mt-6 text-2xl font-black text-white">Match not found.</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#0d1211] px-4 py-6 text-white sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(186,255,22,0.06),transparent_28%),#080b0a] px-4 py-6 text-white sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-6">
-        <Link to="/" className="inline-flex text-sm font-black uppercase tracking-[0.18em] text-[#a9c3ff]">Back to arena</Link>
+        <Link to="/" className="inline-flex text-sm font-black uppercase tracking-[0.18em] text-[#d7ff5f]">Back to matches</Link>
 
         {result ? (
           <ResultMatchView match={match} scores={data?.scores || []} fallOfWickets={data?.fallOfWickets || []} />

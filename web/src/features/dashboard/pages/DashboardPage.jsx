@@ -10,9 +10,9 @@ function DashboardPage() {
   const role = useSelector(selectCurrentRole);
   const modules = getSidebarItems(protectedRoutes, role).filter((item) => item.id !== 'dashboard');
   const stats = [
-    { label: 'Visible modules', value: modules.length, tone: 'bg-emerald-400' },
-    { label: 'Current role', value: role, tone: 'bg-sky-400' },
-    { label: 'Access mode', value: 'Protected', tone: 'bg-amber-400' },
+    { label: 'Visible modules', value: modules.length, tone: 'bg-[#baff16]' },
+    { label: 'Current role', value: role, tone: 'bg-white' },
+    { label: 'Access mode', value: 'Protected', tone: 'bg-[#d7ff5f]' },
   ];
 
   return (
@@ -20,7 +20,7 @@ function DashboardPage() {
       <div className="overflow-hidden rounded-lg border border-zinc-900 bg-zinc-950 text-white shadow-sm">
         <div className="flex flex-wrap items-end justify-between gap-5 px-5 py-6 sm:px-6">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-wide text-emerald-300">{role}</p>
+            <p className="text-sm font-semibold uppercase tracking-wide text-[#baff16]">{role}</p>
             <h2 className="mt-2 text-2xl font-semibold sm:text-3xl">Welcome, {user?.name || 'Admin'}</h2>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-300">
               Your dashboard is filtered from the same route permission config used by protected routes.
@@ -58,11 +58,11 @@ function DashboardPage() {
             <NavLink
               key={module.id}
               to={`/${module.path}`}
-              className="group rounded-lg border border-slate-200 bg-slate-50 p-4 transition hover:-translate-y-0.5 hover:border-emerald-300 hover:bg-white hover:shadow-md hover:shadow-slate-200/80"
+              className="group rounded-lg border border-slate-200 bg-slate-50 p-4 transition hover:-translate-y-0.5 hover:border-[#baff16] hover:bg-white hover:shadow-md hover:shadow-[#baff16]/10"
             >
               <div className="flex items-center justify-between gap-3">
                 <p className="text-base font-semibold text-slate-950">{module.label}</p>
-                <span className="rounded bg-white px-2 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-100 group-hover:bg-emerald-50">
+                <span className="rounded bg-white px-2 py-1 text-xs font-semibold text-[#baff16] ring-1 ring-[#baff16]/20 group-hover:bg-emerald-50">
                   {module.code}
                 </span>
               </div>
