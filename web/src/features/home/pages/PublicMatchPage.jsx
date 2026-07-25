@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router';
 
@@ -16,6 +16,14 @@ function getPlayerId(player) {
 
 function getEntityId(value) {
   return String(value?._id || value?.id || value || '');
+}
+
+function getScoreEventKey(event = {}) {
+  return String(
+    event._id
+      || event.id
+      || `${event.innings ?? ''}:${event.over ?? ''}:${event.ball ?? ''}:${event.createdAt ?? ''}:${event.totalRuns ?? ''}:${event.isWicket ?? ''}`
+  );
 }
 
 function getFullTeamName(team) {
@@ -373,6 +381,8 @@ import ResultMatchView from '../components/ResultMatchView.jsx';
 function PublicMatchPage() {
   const { matchId } = useParams();
   const dispatch = useDispatch();
+  const [arenaEvent, setArenaEvent] = useState(null);
+  const animatedArenaEventKeysRef = useRef(new Set());
   const commentaryQueryArgs = useMemo(() => ({ matchId, limit: 30 }), [matchId]);
 
   const {
@@ -388,6 +398,11 @@ function PublicMatchPage() {
   const match = data?.matchInfo;
   const upcoming = isUpcomingStatus(match?.status);
   const result = isResultStatus(match?.status);
+
+  useEffect(() => {
+    animatedArenaEventKeysRef.current.clear();
+    setArenaEvent(null);
+  }, [matchId]);
 
   useEffect(() => {
     if (!matchId) return undefined;
@@ -421,6 +436,14 @@ function PublicMatchPage() {
           draft.stats = patchStatsWithEvent(draft.stats || [], payload.event);
         }
       }));
+
+      if (payload.event) {
+        const eventKey = getScoreEventKey(payload.event);
+        if (eventKey && !animatedArenaEventKeysRef.current.has(eventKey)) {
+          animatedArenaEventKeysRef.current.add(eventKey);
+          setArenaEvent(payload.event);
+        }
+      }
 
       refreshSoon();
     };
@@ -521,7 +544,7 @@ function PublicMatchPage() {
             <div className="grid gap-6 lg:grid-cols-[1fr_390px]">
               <main className="space-y-6">
                 <Scorecards scores={data.scores || []} />
-                <VirtualArena latestEvent={data.recentEvents?.[0]} />
+                <VirtualArena latestEvent={arenaEvent} />
               </main>
 
               <aside className="space-y-6">
@@ -538,5 +561,4 @@ function PublicMatchPage() {
 }
 
 export default PublicMatchPage;
-
 

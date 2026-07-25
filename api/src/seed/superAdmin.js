@@ -5,7 +5,7 @@ import { connectDB, disconnectDB } from '../config/db.js';
 import env from '../config/env.js';
 import logger from '../config/logger.js';
 import { Roles } from '../shared/constants/roles.js';
-import userRepository from '../modules/users/user.repository.js';
+import userRepository from '../modules/private/users/user.repository.js';
 
 class SuperAdminSeeder {
   constructor(repository = userRepository) {

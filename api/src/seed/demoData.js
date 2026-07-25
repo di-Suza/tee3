@@ -3,12 +3,12 @@ import { fileURLToPath } from 'node:url';
 
 import { connectDB, disconnectDB } from '../config/db.js';
 import logger from '../config/logger.js';
-import Commentary from '../modules/commentary/commentary.model.js';
-import Player from '../modules/player/player.model.js';
-import Score, { ScoreEvent } from '../modules/score/score.model.js';
-import Series, { SeriesMatch } from '../modules/series/series.model.js';
-import Team from '../modules/team/team.model.js';
-import User from '../modules/users/user.model.js';
+import Commentary from '../modules/private/commentary/commentary.model.js';
+import Player from '../modules/private/player/player.model.js';
+import Score, { ScoreEvent } from '../modules/private/score/score.model.js';
+import Series, { SeriesMatch } from '../modules/private/series/series.model.js';
+import Team from '../modules/private/team/team.model.js';
+import User from '../modules/private/users/user.model.js';
 import { MatchStatus } from '../shared/constants/matchStatus.js';
 import { Roles } from '../shared/constants/roles.js';
 

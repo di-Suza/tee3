@@ -1,21 +1,24 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Mutex } from 'async-mutex';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { Mutex } from "async-mutex";
 
-import { clearAuth, setAccessToken } from '../../features/auth/store/authSlice.js';
+import {
+  clearAuth,
+  setAccessToken,
+} from "../../features/auth/store/authSlice.js";
 
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = "https://cricbuzz-whwp.onrender.com/api";
 
 const refreshMutex = new Mutex();
 
 const rawBaseQuery = fetchBaseQuery({
   baseUrl: API_BASE_URL,
-  credentials: 'include',
-  fetchFn: (input, init) => fetch(input, { ...init, cache: 'no-store' }),
+  credentials: "include",
+  fetchFn: (input, init) => fetch(input, { ...init, cache: "no-store" }),
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.accessToken;
 
     if (token) {
-      headers.set('authorization', `Bearer ${token}`);
+      headers.set("authorization", `Bearer ${token}`);
     }
 
     return headers;
@@ -25,8 +28,8 @@ const rawBaseQuery = fetchBaseQuery({
 const baseQueryWithAuth = async (args, api, extraOptions) => {
   await refreshMutex.waitForUnlock();
 
-  const url = typeof args === 'string' ? args : args.url;
-  const isRefreshRequest = url === '/auth/refresh';
+  const url = typeof args === "string" ? args : args.url;
+  const isRefreshRequest = url === "/auth/refresh";
 
   let result = await rawBaseQuery(args, api, extraOptions);
 
@@ -37,11 +40,11 @@ const baseQueryWithAuth = async (args, api, extraOptions) => {
       try {
         const refreshResult = await rawBaseQuery(
           {
-            url: '/auth/refresh',
-            method: 'POST',
+            url: "/auth/refresh",
+            method: "POST",
           },
           api,
-          extraOptions
+          extraOptions,
         );
 
         const accessToken = refreshResult.data?.data?.accessToken;
@@ -65,14 +68,22 @@ const baseQueryWithAuth = async (args, api, extraOptions) => {
 };
 
 const baseApi = createApi({
-  reducerPath: 'api',
+  reducerPath: "api",
   baseQuery: baseQueryWithAuth,
-  tagTypes: ['Auth', 'Home', 'Users', 'Series', 'Teams', 'Players', 'Squads', 'Matches', 'PlayingXI', 'Score', 'Commentary'],
+  tagTypes: [
+    "Auth",
+    "Home",
+    "Users",
+    "Series",
+    "Teams",
+    "Players",
+    "Squads",
+    "Matches",
+    "PlayingXI",
+    "Score",
+    "Commentary",
+  ],
   endpoints: () => ({}),
 });
 
-export {
-  API_BASE_URL,
-  baseApi,
-  baseQueryWithAuth,
-};
+export { API_BASE_URL, baseApi, baseQueryWithAuth };

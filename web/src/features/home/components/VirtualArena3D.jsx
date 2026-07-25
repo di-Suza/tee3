@@ -1,9 +1,74 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera, Trail } from '@react-three/drei';
 
+const RUN_SEGMENT_SECONDS = 1.35;
+const STRIKER_START = [-1, 1, 9];
+const NON_STRIKER_START = [1, 1, -9];
+const BALL_AT_BAT = [0, 0.2, 10];
+const BALL_FROM_BOWLER = [0, 0.2, -10];
+
 function lerp(start, end, t) {
   return start * (1 - t) + end * t;
+}
+
+function easeInOutQuad(t) {
+  return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+}
+
+function getNumber(value) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : 0;
+}
+
+function getEventKey(event) {
+  return String(
+    event?._id
+      || event?.id
+      || `${event?.innings ?? ''}:${event?.over ?? ''}:${event?.ball ?? ''}:${event?.createdAt ?? ''}:${event?.totalRuns ?? ''}:${event?.isWicket ?? ''}`
+  );
+}
+
+function getRunningRuns(event) {
+  const batterRuns = getNumber(event?.batterRuns ?? event?.runs ?? event?.totalRuns);
+  const extras = getNumber(event?.extras);
+  const extraType = event?.extraType || 'NONE';
+
+  if (['BYE', 'LEG_BYE'].includes(extraType)) {
+    return batterRuns + extras;
+  }
+
+  return batterRuns;
+}
+
+function getAnimationForEvent(event) {
+  const shotRuns = getNumber(event?.batterRuns ?? event?.runs ?? event?.totalRuns);
+  const runningRuns = Math.max(0, Math.min(Math.round(getRunningRuns(event)), 6));
+  const totalRuns = getNumber(event?.totalRuns ?? shotRuns + getNumber(event?.extras));
+  const isWicket = Boolean(event?.isWicket);
+
+  if (isWicket) {
+    return { type: 'wicket', runningRuns, shotRuns, durationMs: 2600 };
+  }
+
+  if (shotRuns === 4 || shotRuns === 6) {
+    return { type: 'boundary', runningRuns, shotRuns, durationMs: 3000 };
+  }
+
+  if (runningRuns > 0) {
+    return {
+      type: 'run',
+      runningRuns,
+      shotRuns,
+      durationMs: Math.round((runningRuns * RUN_SEGMENT_SECONDS + 0.45) * 1000),
+    };
+  }
+
+  if (totalRuns > 0) {
+    return { type: 'extra', runningRuns, shotRuns, durationMs: 1500 };
+  }
+
+  return { type: 'idle', runningRuns: 0, shotRuns: 0, durationMs: 0 };
 }
 
 function AnimatedScene({ latestEvent }) {
@@ -12,59 +77,97 @@ function AnimatedScene({ latestEvent }) {
   const nonStrikerRef = useRef();
   const bowlerRef = useRef();
   const stumpsRef = useRef();
+  const finishTimeoutRef = useRef(null);
+  const lastEventKeyRef = useRef('');
 
   const [animState, setAnimState] = useState({
     active: false,
     type: 'idle',
     startTime: 0,
-    runs: 0,
-    isWicket: false
+    runningRuns: 0,
+    shotRuns: 0,
+    isWicket: false,
   });
+
+  function setPosition(ref, position) {
+    if (ref.current) {
+      ref.current.position.set(position[0], position[1], position[2]);
+    }
+  }
+
+  function resetScene(type = 'idle') {
+    setPosition(ballRef, type === 'wicket' || type === 'extra' ? BALL_FROM_BOWLER : BALL_AT_BAT);
+    setPosition(batsmanRef, STRIKER_START);
+    setPosition(nonStrikerRef, NON_STRIKER_START);
+
+    if (stumpsRef.current) {
+      stumpsRef.current.rotation.set(0, 0, 0);
+      stumpsRef.current.position.set(0, 0, 10);
+    }
+  }
+
+  function settleRunners(runs) {
+    const swappedEnds = runs % 2 === 1;
+    setPosition(batsmanRef, swappedEnds ? [-1, 1, -9] : STRIKER_START);
+    setPosition(nonStrikerRef, swappedEnds ? [1, 1, 9] : NON_STRIKER_START);
+  }
+
+  useEffect(() => () => {
+    if (finishTimeoutRef.current) {
+      window.clearTimeout(finishTimeoutRef.current);
+    }
+  }, []);
 
   useEffect(() => {
     if (!latestEvent) return;
 
-    const runs = Number(latestEvent.totalRuns) || 0;
-    const isWicket = latestEvent.isWicket;
+    const eventKey = getEventKey(latestEvent);
+    if (eventKey === lastEventKeyRef.current) return;
+    lastEventKeyRef.current = eventKey;
 
-    let type = 'idle';
-    if (isWicket) type = 'wicket';
-    else if (runs >= 4) type = 'boundary';
-    else if (runs > 0) type = 'run';
-
-    if (type !== 'idle') {
-      setAnimState({
-        active: true,
-        type,
-        startTime: Date.now(),
-        runs,
-        isWicket
-      });
-
-      setTimeout(() => {
-        setAnimState(s => ({ ...s, active: false, type: 'idle' }));
-        
-        if (ballRef.current) ballRef.current.position.set(0, 0.2, 10);
-        if (batsmanRef.current) batsmanRef.current.position.set(-1, 1, 9);
-        if (nonStrikerRef.current) nonStrikerRef.current.position.set(1, 1, -9);
-        if (stumpsRef.current) {
-          stumpsRef.current.rotation.x = 0;
-          stumpsRef.current.position.z = 10;
-        }
-      }, type === 'run' ? runs * 1500 : 3000);
+    if (finishTimeoutRef.current) {
+      window.clearTimeout(finishTimeoutRef.current);
+      finishTimeoutRef.current = null;
     }
+
+    const animation = getAnimationForEvent(latestEvent);
+    if (animation.type === 'idle') {
+      resetScene('idle');
+      setAnimState((current) => ({ ...current, active: false, type: 'idle' }));
+      return;
+    }
+
+    resetScene(animation.type);
+
+    setAnimState({
+      active: true,
+      type: animation.type,
+      startTime: performance.now(),
+      runningRuns: animation.runningRuns,
+      shotRuns: animation.shotRuns,
+      isWicket: animation.type === 'wicket',
+    });
+
+    finishTimeoutRef.current = window.setTimeout(() => {
+      if (animation.type === 'run') {
+        settleRunners(animation.runningRuns);
+      }
+
+      setAnimState((current) => ({ ...current, active: false, type: 'idle' }));
+      finishTimeoutRef.current = null;
+    }, animation.durationMs);
   }, [latestEvent]);
 
   useFrame(() => {
     if (!animState.active) return;
-    const elapsed = (Date.now() - animState.startTime) / 1000;
+    const elapsed = (performance.now() - animState.startTime) / 1000;
 
     if (ballRef.current) {
        if (animState.type === 'boundary') {
           const t = Math.min(elapsed / 2.0, 1.0);
           ballRef.current.position.x = lerp(0, -30, t);
           ballRef.current.position.z = lerp(10, -40, t);
-          ballRef.current.position.y = 0.2 + 25 * (1 - Math.pow(t * 2 - 1, 2));
+          ballRef.current.position.y = 0.2 + (animState.shotRuns === 6 ? 25 : 5) * Math.sin(Math.PI * t);
        } else if (animState.type === 'wicket') {
           const t = Math.min(elapsed / 0.5, 1.0);
           ballRef.current.position.z = lerp(-10, 10, t);
@@ -77,16 +180,21 @@ function AnimatedScene({ latestEvent }) {
           ballRef.current.position.x = lerp(0, 15, t);
           ballRef.current.position.z = lerp(10, -15, t);
           ballRef.current.position.y = 0.2;
+       } else if (animState.type === 'extra') {
+          const t = Math.min(elapsed / 1.0, 1.0);
+          ballRef.current.position.x = lerp(0, 1.35, t);
+          ballRef.current.position.z = lerp(-10, 12, t);
+          ballRef.current.position.y = 0.2;
        }
     }
 
     if (animState.type === 'run' && batsmanRef.current && nonStrikerRef.current) {
-       const runs = animState.runs;
-       const totalRunTime = runs * 1.5;
-       if (elapsed <= totalRunTime) {
-          const currentRun = Math.floor(elapsed / 1.5);
-          const runProgress = (elapsed % 1.5) / 1.5;
-          const t = runProgress < 0.5 ? 2 * runProgress * runProgress : -1 + (4 - 2 * runProgress) * runProgress;
+       const runs = animState.runningRuns;
+       const totalRunTime = runs * RUN_SEGMENT_SECONDS;
+       if (elapsed < totalRunTime) {
+          const currentRun = Math.floor(elapsed / RUN_SEGMENT_SECONDS);
+          const runProgress = (elapsed % RUN_SEGMENT_SECONDS) / RUN_SEGMENT_SECONDS;
+          const t = easeInOutQuad(runProgress);
 
           const goingToNonStrikerEnd = currentRun % 2 === 0;
 
@@ -97,6 +205,12 @@ function AnimatedScene({ latestEvent }) {
              batsmanRef.current.position.z = lerp(-9, 9, t);
              nonStrikerRef.current.position.z = lerp(9, -9, t);
           }
+
+          const runnerBounce = Math.sin(runProgress * Math.PI * 2) * 0.08;
+          batsmanRef.current.position.y = 1 + runnerBounce;
+          nonStrikerRef.current.position.y = 1 - runnerBounce;
+       } else {
+          settleRunners(runs);
        }
     }
   });
